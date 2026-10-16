@@ -9,10 +9,31 @@ change reaches us only when we choose to pull it and read the diff.
 | Plugin | Kind | Upstream | Vendored at | License |
 |---|---|---|---|---|
 | `savvy-flow` | skill + 5 subagents (Markdown only, no code) | [Phalegethon/sgs-kit](https://github.com/Phalegethon/sgs-kit) `plugins/savvy-flow`, itself a fork of johnnyvizz/claude-kit | `27f096e22402455630c2866d5d0bb29136bfeb97` | MIT (`plugins/savvy-flow/LICENSE`) |
+| `savvy-progress` | mod (TypeScript hooks module, runs code) | same repository, `plugins/savvy-progress` | `27f096e22402455630c2866d5d0bb29136bfeb97` | MIT (`plugins/savvy-progress/LICENSE`) |
 
-Deliberately **not** vendored: `savvy-progress` from the same upstream. It is a
-code mod that hooks prompts, tool calls and model steps, and has not been
-reviewed.
+### savvy-progress review notes
+
+Read in full (`hooks/register.tsx`, `types/index.d.ts`). Its upstream `tests/`
+were not vendored: they only run under `claude plugin test` and were not
+reviewed line by line.
+
+- **What it calls** (confirmed by `claude plugin validate`): UI, clock, its own
+  plugin state, `$.session.usage`, `$.agent.list`, `$.settings.read` (only the
+  `language` setting), `$.env.get` (only `LANG`, `LC_ALL`, `LC_MESSAGES`),
+  `$.config.set` (only its own `savvy-progress.*` options), and it registers two
+  tools and two slash commands. **No network, filesystem, process or model
+  calls.**
+- **What it hooks:** prompts and turns (to time them; it never rewrites a
+  prompt), every model step (reads token usage only), `Agent` calls and
+  subagent spawns (to draw them), and its own two tools. It does not touch the
+  system prompt.
+- **The one behaviour change:** `agent.spawn` can set the model of an Explore
+  or general-purpose subagent that names none. Off by default (`inherit`);
+  turned on only by `/agent-routing` or the plugin's options.
+- **Robustness, not security:** `claude plugin validate` notes several hooks on
+  the `Agent` and prompt paths have no `.catch`, so a bug in the mod could fail
+  those calls rather than just losing the drawing. Disable the plugin if
+  subagent launches start failing.
 
 ## Enabling
 

@@ -30,6 +30,7 @@ When delegating, pass the task's `title` verbatim as the Agent tool's `descripti
 
 1. Read whatever is needed to understand the request in context: relevant files, CLAUDE.md, recent git history. Use an Explore subagent (haiku/sonnet) only for wide searches.
    - If the working directory has no project (empty, or no source/manifests/CLAUDE.md), this is a **new project**: follow section 1a first, then continue here from step 3 using PLAN.md as the task list.
+   - A directory that already has a `CLAUDE.md` is never a new project, even with no source yet: skip section 1a, never rewrite that CLAUDE.md, and if it names a spec or task list (for example a root `SPEC.md`), use those tasks and tiers as the plan instead of writing `docs/SPEC.md` or `docs/PLAN.md`.
 2. Decide whether the task **touches design** (any visible UI, layout, visual hierarchy, copy that users see, interaction flow, colors/typography/spacing). If yes → go to section 2 before any implementation.
 3. Break the work into **tasks** with:
    - a clear, self-contained brief (what, where, constraints, definition of done, how to verify);

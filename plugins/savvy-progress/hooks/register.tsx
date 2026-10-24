@@ -576,7 +576,7 @@ const routeModel = (options: PluginOptions, e: AgentSpawnInput): string | undefi
   return model === 'inherit' ? undefined : model
 }
 
-const windowOf = (model: string): number => (/haiku/i.test(model) ? 200_000 : 1_000_000)
+const windowOf = (model: string): number => (/haiku-4|claude-3/i.test(model) ? 200_000 : 1_000_000)
 
 // `savvy-careful`, or `savvy-flow:savvy-careful` when the agents ship in a plugin.
 const tierOf = (type: string): string => {
@@ -838,14 +838,14 @@ const COSTUMES: Record<string, (f: Fill, t: string) => void> = {
   // Sonnet: scholar in a mortarboard; the tassel swings.
   sonnet: (f, t) => {
     crabBody(f)
-    stamp(f, 4, 5, ['bbbbbbbbbbbbbbbbbbbbbb', '...ddddddddddddddd....', '....ddddddddddddd.....', '....ddddddddddddd.....'], { b: INK, d: '#3A3A3C' })
-    f(14, 4, 2, 1, t); f(24, 6, 1, 4, t, 'it'); f(23, 10, 3, 2, t, 'it')
+    stamp(f, 4, 6, ['bbbbbbbbbbbbbbbbbbbbbb', '...ddddddddddddddd....', '....ddddddddddddd.....', '....ddddddddddddd.....'], { b: INK, d: '#3A3A3C' })
+    f(14, 5, 2, 1, t); f(24, 7, 1, 4, t, 'it'); f(23, 11, 3, 2, t, 'it')
   },
   // Haiku: a sprout on its head; the leaves sway.
   haiku: (f, t) => {
     crabBody(f)
-    f(15, 5, 1, 5, '#4C8B3A')
-    stamp(f, 11, 2, ['......tt..', '.....ttt..', 'tt...tt...', 'ttt.......', '.tt.......'], { t }, 'it')
+    f(15, 4, 1, 6, '#4C8B3A')
+    stamp(f, 12, 2, ['....tt', '...ttt', 'tt.tt.', 'ttt...', '.tt...'], { t }, 'it')
   },
   other: f => crabBody(f),
 }

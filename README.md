@@ -41,11 +41,14 @@ Versions carry a `-lh.N` suffix when this repo diverges from the vendored SHA.
 
 - **savvy-flow `-lh.1`:** two cheaper worker tiers, `savvy-sonnet` (Sonnet,
   medium effort) and `savvy-haiku` (Haiku, low effort), added to the agents
-  and to the skill's tier table.
+  and to the skill's tier table. A directory with a `CLAUDE.md` never takes the
+  new-project path (section 1a), so the skill won't rewrite a template's
+  CLAUDE.md or write a second spec.
 - **savvy-progress `-lh.1`:** the panel knows the two new tiers (colour,
   planned-row model, costume, `tier` enum on the `progress` tool), and the
   price table is ported from johnnyvizz/claude-kit 1.2.1: 5.5 model rows,
-  Haiku 5.5 long-prompt pricing, cache writes at the 1-hour rate.
+  Haiku 5.5 long-prompt pricing, cache writes at the 1-hour rate, and the
+  context window (only Haiku 4 and Claude 3 are 200K).
 
 Keep these when pulling a new upstream.
 

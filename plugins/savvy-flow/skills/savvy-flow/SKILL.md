@@ -1,7 +1,6 @@
 ---
 name: savvy-flow
-description: Orchestrated delivery flow. The session model plans, owns design, delegates implementation to tiered worker subagents (savvy-fable / savvy-heavy / savvy-careful / savvy-medium / savvy-light / savvy-sonnet / savvy-haiku) and adversarially reviews their output. Invoke with /savvy-flow <task>.
-disable-model-invocation: true
+description: Orchestrated delivery flow. The session model plans, owns design, delegates implementation to tiered worker subagents (savvy-fable / savvy-heavy / savvy-careful / savvy-medium / savvy-light / savvy-sonnet / savvy-haiku) and adversarially reviews their output. Invoke with /savvy-flow <task>. Start it only when the user asks for it or picks it as the way to build; never on your own initiative.
 argument-hint: <task description>
 ---
 

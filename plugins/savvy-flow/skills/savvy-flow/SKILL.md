@@ -1,6 +1,6 @@
 ---
 name: savvy-flow
-description: Orchestrated delivery flow. The session model plans, owns design, delegates implementation to tiered worker subagents (savvy-fable / savvy-heavy / savvy-careful / savvy-medium / savvy-light) and adversarially reviews their output. Invoke with /savvy-flow <task>.
+description: Orchestrated delivery flow. The session model plans, owns design, delegates implementation to tiered worker subagents (savvy-fable / savvy-heavy / savvy-careful / savvy-medium / savvy-light / savvy-sonnet / savvy-haiku) and adversarially reviews their output. Invoke with /savvy-flow <task>.
 disable-model-invocation: true
 argument-hint: <task description>
 ---
@@ -14,7 +14,7 @@ Task from the user: $ARGUMENTS
 ## 0. Preconditions
 
 - The flow is designed for a strong orchestrator model at high effort (Fable high is the reference setup). Do not try to detect or verify the session's model or effort — you cannot see the effort level. Whatever the session runs on is the user's deliberate choice; just orchestrate.
-- Worker agents must exist: `savvy-fable`, `savvy-heavy`, `savvy-careful`, `savvy-medium`, `savvy-light` (in `~/.claude/agents/`, or shipped with the savvy-flow plugin, in which case the Agent tool lists them as `savvy-flow:savvy-careful` and so on). If the Agent tool does not list them, stop and tell the user.
+- Worker agents must exist: `savvy-fable`, `savvy-heavy`, `savvy-careful`, `savvy-medium`, `savvy-light`, `savvy-sonnet`, `savvy-haiku` (in `~/.claude/agents/`, or shipped with the savvy-flow plugin, in which case the Agent tool lists them as `savvy-flow:savvy-careful` and so on). If the Agent tool does not list them, stop and tell the user.
 
 ## Progress bar
 
@@ -30,6 +30,7 @@ When delegating, pass the task's `title` verbatim as the Agent tool's `descripti
 
 1. Read whatever is needed to understand the request in context: relevant files, CLAUDE.md, recent git history. Use an Explore subagent (haiku/sonnet) only for wide searches.
    - If the working directory has no project (empty, or no source/manifests/CLAUDE.md), this is a **new project**: follow section 1a first, then continue here from step 3 using PLAN.md as the task list.
+   - A directory that already has a `CLAUDE.md` is never a new project, even with no source yet: skip section 1a, never rewrite that CLAUDE.md, and if it names a spec or task list (for example a root `SPEC.md`), use those tasks and tiers as the plan instead of writing `docs/SPEC.md` or `docs/PLAN.md`.
 2. Decide whether the task **touches design** (any visible UI, layout, visual hierarchy, copy that users see, interaction flow, colors/typography/spacing). If yes → go to section 2 before any implementation.
 3. Break the work into **tasks** with:
    - a clear, self-contained brief (what, where, constraints, definition of done, how to verify);
@@ -74,8 +75,11 @@ Pick the cheapest tier that will get the task right the first time. Two axes: **
 | Careful | `savvy-careful` | Opus / high | "Do it right": the approach is clear but execution is delicate. Multi-file refactors, fixes that must preserve invariants, logic with many edge cases, concurrency |
 | Medium | `savvy-medium` | Opus / medium | Standard feature work, bug fixes with a known cause, changes confined to a few files with clear requirements |
 | Light | `savvy-light` | Opus / low | Mechanical edits, renames, boilerplate, config, small isolated fixes, running builds/tests and reporting |
+| Sonnet | `savvy-sonnet` | Sonnet / medium | Routine implementation where the brief and existing tests leave nothing to judgment: the spec names the files, interfaces and expected behaviour |
+| Haiku | `savvy-haiku` | Haiku / low | No judgment at all: run tests or builds and report, capture screenshots, rote edits spelled out line by line |
 
 Heuristics:
+- Sonnet and Haiku are cheaper tiers below Light, not a different axis: use them only when the brief is fully specified. A task returned from Sonnet or Haiku goes back at Medium or higher, never to the same tier.
 - Uncertain between two tiers → take the higher one. Exception: Fable is a reserve tier; pick it only when the task clearly meets its criteria, otherwise Heavy.
 - Heavy vs Careful is about the kind of difficulty, not the amount: insight needed → Heavy; thoroughness needed → Careful. A task that needs both is two tasks: Heavy investigates and produces a precise brief, Careful implements it.
 - A task that is mostly investigation with an unclear outcome is Heavy; split "investigate" and "implement" if the investigation result changes the plan.

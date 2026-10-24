@@ -39,6 +39,7 @@ reviewed line by line.
 
 Versions carry a `-lh.N` suffix when this repo diverges from the vendored SHA.
 
+- **savvy-flow `-lh.2`:** Claude may start the skill itself (`disable-model-invocation` removed), but only when the user asks for it or picks it, as the agent-build-kit build prompt offers. The skill's description says so.
 - **savvy-flow `-lh.1`:** two cheaper worker tiers, `savvy-sonnet` (Sonnet,
   medium effort) and `savvy-haiku` (Haiku, low effort), added to the agents
   and to the skill's tier table. A directory with a `CLAUDE.md` never takes the

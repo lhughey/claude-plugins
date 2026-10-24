@@ -8,7 +8,7 @@ change reaches us only when we choose to pull it and read the diff.
 
 | Plugin | Kind | Upstream | Vendored at | License |
 |---|---|---|---|---|
-| `savvy-flow` | skill + 5 subagents (Markdown only, no code) | [Phalegethon/sgs-kit](https://github.com/Phalegethon/sgs-kit) `plugins/savvy-flow`, itself a fork of johnnyvizz/claude-kit | `27f096e22402455630c2866d5d0bb29136bfeb97` | MIT (`plugins/savvy-flow/LICENSE`) |
+| `savvy-flow` | skill + 7 subagents (Markdown only, no code) | [Phalegethon/sgs-kit](https://github.com/Phalegethon/sgs-kit) `plugins/savvy-flow`, itself a fork of johnnyvizz/claude-kit | `27f096e22402455630c2866d5d0bb29136bfeb97` | MIT (`plugins/savvy-flow/LICENSE`) |
 | `savvy-progress` | mod (TypeScript hooks module, runs code) | same repository, `plugins/savvy-progress` | `27f096e22402455630c2866d5d0bb29136bfeb97` | MIT (`plugins/savvy-progress/LICENSE`) |
 
 ### savvy-progress review notes
@@ -34,6 +34,20 @@ reviewed line by line.
   the `Agent` and prompt paths have no `.catch`, so a bug in the mod could fail
   those calls rather than just losing the drawing. Disable the plugin if
   subagent launches start failing.
+
+### Local changes (not upstream)
+
+Versions carry a `-lh.N` suffix when this repo diverges from the vendored SHA.
+
+- **savvy-flow `-lh.1`:** two cheaper worker tiers, `savvy-sonnet` (Sonnet,
+  medium effort) and `savvy-haiku` (Haiku, low effort), added to the agents
+  and to the skill's tier table.
+- **savvy-progress `-lh.1`:** the panel knows the two new tiers (colour,
+  planned-row model, costume, `tier` enum on the `progress` tool), and the
+  price table is ported from johnnyvizz/claude-kit 1.2.1: 5.5 model rows,
+  Haiku 5.5 long-prompt pricing, cache writes at the 1-hour rate.
+
+Keep these when pulling a new upstream.
 
 ## Enabling
 

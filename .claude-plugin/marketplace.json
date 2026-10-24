@@ -12,14 +12,14 @@
       "name": "savvy-flow",
       "source": "./plugins/savvy-flow",
       "description": "Skill: plan, delegate to tiered worker subagents, review.",
-      "version": "1.2.0-sgs.1",
+      "version": "1.2.0-sgs.1-lh.1",
       "category": "skill"
     },
     {
       "name": "savvy-progress",
       "source": "./plugins/savvy-progress",
       "description": "Mod: session row above the prompt (cost, tokens, context, usage limits), a session panel, and a live progress bar for savvy-flow and any subagents.",
-      "version": "1.2.0-sgs.11",
+      "version": "1.2.0-sgs.11-lh.1",
       "category": "mod"
     }
   ]
